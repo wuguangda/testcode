@@ -36,6 +36,7 @@ model.add(keras.layers.Dropout(0.25))
 
 model.add(keras.layers.Conv1D(64, 3, padding='same'))
 model.add(keras.layers.Activation('relu'))
+model.add(keras.layers.MaxPooling1D(pool_size=2))
 model.add(keras.layers.Conv1D(64, 3))
 model.add(keras.layers.Activation('relu'))
 model.add(keras.layers.MaxPooling1D(pool_size=2))
@@ -52,7 +53,7 @@ model.compile(loss='sparse_categorical_crossentropy',
               optimizer='adam',
               metrics=['accuracy'])
 
-model.fit(train_images, train_labels, epochs=20)
+model.fit(train_images, train_labels, epochs=50)
 
 
 test_loss, test_acc = model.evaluate(test_images,  test_labels, verbose=2)

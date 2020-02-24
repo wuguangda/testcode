@@ -24,14 +24,22 @@ class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
 
 model = keras.Sequential([
     keras.layers.Flatten(input_shape=(28, 28)),
+    keras.layers.Dense(512, activation='relu'),
+    keras.layers.Dense(256, activation='relu'),
     keras.layers.Dense(128, activation='relu'),
-    keras.layers.Dense(128, activation='relu'),
-    keras.layers.Dense(10, activation='softmax')
+    keras.layers.Dense(64, activation='relu'),
+    keras.layers.Dense(32, activation='relu'),
+    keras.layers.Dense(10)
 ])
 
+#model.compile(optimizer='adam',
+#              loss='sparse_categorical_crossentropy',
+#              metrics=['accuracy'])
+
 model.compile(optimizer='adam',
-              loss='sparse_categorical_crossentropy',
+              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
+
 print(train_images.shape)
 print(train_labels.shape)
 

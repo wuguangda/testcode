@@ -25,42 +25,44 @@ class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
 
 #标签个数
 num_classes = 10
+conv1d_kernal = 3
+
 
 model = keras.models.Sequential()
-model.add(keras.layers.Conv1D(32, 3, padding='same', input_shape=(28, 28)))
+model.add(keras.layers.Conv1D(32, conv1d_kernal, padding='same', input_shape=(28, 28)))
 model.add(keras.layers.Activation('relu'))
-model.add(keras.layers.Conv1D(32, 3))
+model.add(keras.layers.Conv1D(32, conv1d_kernal))
 model.add(keras.layers.Activation('relu'))
 model.add(keras.layers.MaxPooling1D(pool_size=2))
 model.add(keras.layers.Dropout(0.25))
 
-model.add(keras.layers.Conv1D(64, 3, padding='same'))
+model.add(keras.layers.Conv1D(64, conv1d_kernal, padding='same'))
 model.add(keras.layers.Activation('relu'))
 model.add(keras.layers.MaxPooling1D(pool_size=2))
-model.add(keras.layers.Conv1D(64, 3))
+model.add(keras.layers.Conv1D(64, conv1d_kernal))
 model.add(keras.layers.Activation('relu'))
 model.add(keras.layers.MaxPooling1D(pool_size=2))
 model.add(keras.layers.Dropout(0.25))
 
 model.add(keras.layers.Flatten())
-model.add(keras.layers.Dense(64, activation='relu'))
-#model.add(keras.layers.Activation('relu'))
+model.add(keras.layers.Dense(512))
+model.add(keras.layers.Activation('relu'))
+#model.add(keras.layers.Dense(64, activation='relu'))
+#model.add(keras.layers.Conv1D(32, conv1d_kernal))
 model.add(keras.layers.Dropout(0.5))
 model.add(keras.layers.Dense(num_classes, activation = 'softmax'))
-#model.add(keras.layers.Activation('softmax'))
 
 model.compile(loss='sparse_categorical_crossentropy',
               optimizer='adam',
               metrics=['accuracy'])
 
-model.fit(train_images, train_labels, epochs=50)
+model.fit(train_images, train_labels, epochs=10)
 
 
 test_loss, test_acc = model.evaluate(test_images,  test_labels, verbose=2)
 
 
 print('\nTest accuracy:', test_acc)
-
 
 predictions = model.predict(test_images)
 
